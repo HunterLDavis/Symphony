@@ -32,7 +32,7 @@ public class TimeSend {
 	{
 		fileName=nameOfFile;
 		try{
-        FileInputStream fileIn = new FileInputStream("fileName");
+        FileInputStream fileIn = new FileInputStream("notesList.ser");
         ObjectInputStream in = new ObjectInputStream(fileIn);
         listOfNotes = (DefaultListModel) in.readObject();
         in.close();
@@ -97,7 +97,7 @@ public class TimeSend {
 	listOfNotes.addElement(lists.get(i));
 	}
 	try{
-	 FileOutputStream fileOut = new FileOutputStream(fileName);
+	 FileOutputStream fileOut = new FileOutputStream("notesList.ser");
 	 ObjectOutputStream out = new ObjectOutputStream(fileOut);
 	 out.writeObject(listOfNotes);
 	 out.close();
@@ -121,14 +121,17 @@ public class TimeSend {
 			listOfann.set(i, temp);
 		}
 	}
+	public Note getNote()
+	{
+		return lists.get(index);
+	}
 	//listener. makes time go up and sends annotation
 	private class CountListener implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
 			second++;
 			if(index>=lists.size())
 				time.stop();
-			if (lists.get(index).getTime() == second) {
-				// send lists.get(index)
+			if (lists.get(index+1).getTime() == second) {
 				index++;
 			}
 		}
